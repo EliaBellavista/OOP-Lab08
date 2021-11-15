@@ -5,10 +5,13 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -38,7 +41,17 @@ public class BadIOGUI {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
         final JButton write = new JButton("Write on file");
-        canvas.add(write, BorderLayout.CENTER);
+        
+        //ez02.01
+        JPanel mio = new JPanel();
+        mio.setLayout(new BoxLayout(mio, BoxLayout.X_AXIS));
+        mio.add(write);
+        canvas.add(mio, BorderLayout.CENTER);
+        
+        //read, ex 02.02
+        JButton read =new JButton("READ");
+        mio.add(read);
+        
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
@@ -61,6 +74,21 @@ public class BadIOGUI {
                     e1.printStackTrace();
                 }
             }
+        });
+        
+        read.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                try {
+                    InputStream in = new FileInputStream(PATH);
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+                System.out.println("ahia");
+                
+            }
+            
         });
     }
 
@@ -86,6 +114,7 @@ public class BadIOGUI {
         /*
          * OK, ready to pull the frame onscreen
          */
+        frame.pack();
         frame.setVisible(true);
     }
 
