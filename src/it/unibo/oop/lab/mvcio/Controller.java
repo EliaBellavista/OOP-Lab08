@@ -1,5 +1,13 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.IOException;
+
+
 /**
  * 
  */
@@ -27,5 +35,29 @@ public class Controller {
      * System.getProperty("file.separator"). The combined use of those methods leads
      * to a software that runs correctly on every platform.
      */
-
+    private String path =  System.getProperty("user.home") + 
+            System.getProperty("file.separator") + 
+            "output.txt";
+    private File f = new File(path);
+    
+    //methods
+    public void setFile(final File n) {
+        this.f = n;
+    }
+    
+    public File getFile() {
+        return this.f;
+    }
+    
+    public String getPath() {
+        return this.f.getAbsolutePath();
+    }
+    
+    public void save(final String s) throws IOException{
+        try(DataOutputStream o = new DataOutputStream(new FileOutputStream(f))){
+            o.writeChars(s);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }    
 }
